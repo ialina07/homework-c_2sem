@@ -53,3 +53,19 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# build folders
+build/
+cmake-build-*/
+*/build/
+*/cmake-build-*/
+
+# editor folders
+*.swp
+*.swo
+*~
+.DS_Store
+
+# data files
+output.txt
+*.csv
