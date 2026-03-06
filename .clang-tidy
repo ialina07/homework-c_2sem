@@ -1,7 +1,6 @@
 ---
 Checks: >
   *,
-  -readability-identifier-length*,    # ЭТУ СТРОКУ ДОБАВИТЬ!
   -llvmlibc-*,
   -android-cloexec-*,
   -hicpp-braces-around-statements,
@@ -13,6 +12,7 @@ Checks: >
   -llvm-*,
   -modernize-*,
   -readability-magic-numbers,
+  -readability-identifier-length*,
   -altera-*,
   -cert-*,
   -concurrency-*,
