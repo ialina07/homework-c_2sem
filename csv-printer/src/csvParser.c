@@ -1,31 +1,33 @@
+#include "csvPrinter.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "csvPrinter.h"
 
 #define MAX_LINE_LEN 1024
 #define MAX_COLS 100
 #define MAX_ROWS 1000
 
 // Проверяем, является ли строка числом
-int isNumber(const char *str) {
+int isNumber(const char* str)
+{
     if (str == NULL || *str == '\0')
         return 0;
-    char *endptr;
+    char* endptr;
     strtod(str, &endptr);
     // если после числа ничего нет, то это число
     return *endptr == '\0';
 }
 
 // Чтение CSV-файла и заполнение таблицы
-CSVTable* readCsv(const char *filename) {
-    FILE *f = fopen(filename, "r");
+CSVTable* readCsv(const char* filename)
+{
+    FILE* f = fopen(filename, "r");
     if (!f) {
         fprintf(stderr, "Cannot open input file %s\n", filename);
         return NULL;
     }
 
-    CSVTable *t = (CSVTable*)malloc(sizeof(CSVTable));
+    CSVTable* t = (CSVTable*)malloc(sizeof(CSVTable));
     t->data = (char***)malloc(sizeof(char**) * MAX_ROWS);
     t->rows = 0;
     t->cols = 0;
@@ -41,7 +43,7 @@ CSVTable* readCsv(const char *filename) {
             continue;
 
         // Разделяем на колонки по запятой
-        char *token = strtok(line, ",");
+        char* token = strtok(line, ",");
         int col = 0;
         t->data[row] = (char**)malloc(sizeof(char*) * MAX_COLS);
 

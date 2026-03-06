@@ -1,10 +1,11 @@
+#include "csvPrinter.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "csvPrinter.h"
 
 // Определяем типы колонок и максимальную ширину
-void analyzeTable(CSVTable *t) {
+void analyzeTable(CSVTable* t)
+{
     t->isNumber = (int*)malloc(sizeof(int) * t->cols);
     t->colWidths = (int*)malloc(sizeof(int) * t->cols);
 
@@ -36,8 +37,9 @@ void analyzeTable(CSVTable *t) {
 }
 
 // вывод таблицы в файл
-void printTable(const CSVTable *t, const char *filename) {
-    FILE *out = fopen(filename, "w");
+void printTable(const CSVTable* t, const char* filename)
+{
+    FILE* out = fopen(filename, "w");
     if (!out) {
         fprintf(stderr, "Ошибка: не удалось создать выходной файл %s\n", filename);
         return;
@@ -97,7 +99,8 @@ void printTable(const CSVTable *t, const char *filename) {
     fclose(out);
 }
 
-void freeTable(CSVTable *t) {
+void freeTable(CSVTable* t)
+{
     for (int i = 0; i < t->rows; i++) {
         for (int j = 0; j < t->cols; j++)
             free(t->data[i][j]);
