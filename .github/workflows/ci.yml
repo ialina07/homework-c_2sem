@@ -29,13 +29,10 @@ jobs:
             dir=$(dirname "$file")
             parent=$(dirname "$dir")
             
-            # ищем include папку
             if [ -d "$parent/include" ]; then
               clang-tidy-14 "$file" -- -I"$parent/include" -I"$dir" || true
             elif [ -d "$dir/include" ]; then
               clang-tidy-14 "$file" -- -I"$dir/include" -I"$dir" || true
-            elif [ -d "$dir/../include" ]; then
-              clang-tidy-14 "$file" -- -I"$dir/../include" -I"$dir" || true
             else
               clang-tidy-14 "$file" -- -I"$dir" || true
             fi
@@ -61,9 +58,12 @@ jobs:
               cd build
               cmake ..
               make
+              
+              # Run tests if they exist
               if [ -f "./tests" ]; then
                 ./tests
               fi
+              
               cd ../..
             fi
           done
