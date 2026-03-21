@@ -25,9 +25,7 @@ jobs:
 
       - name: Run clang-tidy
         run: |
-          find csv-printer -name '*.c' | xargs clang-tidy-14 \
-            --extra-arg=-I$(pwd)/csv-printer/include \
-            --extra-arg=-I$(pwd)/csv-printer/src
+          find . -name '*.c' | xargs clang-tidy-14
 
   build-and-test:
     runs-on: ubuntu-latest
@@ -39,9 +37,8 @@ jobs:
 
       - name: Build and test
         run: |
-          cd csv-printer
           mkdir -p build
           cd build
           cmake ..
           make
-          ./tests
+          ctest
