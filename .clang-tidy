@@ -1,7 +1,11 @@
 ---
 Checks: >
   *,
-  -readability-identifier-length*,    # ЭТУ СТРОКУ ДОБАВИТЬ!
+  -readability-identifier-length*,
+  -readability-identifier-naming*,
+  -readability-else-after-return,
+  -readability-function-cognitive-complexity,
+  -readability-isolate-declaration,
   -llvmlibc-*,
   -android-cloexec-*,
   -hicpp-braces-around-statements,
