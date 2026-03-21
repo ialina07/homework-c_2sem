@@ -4,25 +4,25 @@
 #include <string.h>
 
 // получение высоты узла
-static int getHeight(Node *node) {
+static int getHeight(Node* node) {
     return node ? node->height : 0;
 }
 
 // вычисление фактора баланса
-static int getBalanceFactor(Node *node) {
+static int getBalanceFactor(Node* node) {
     return node ? getHeight(node->left) - getHeight(node->right) : 0;
 }
 
 // обновление высоты узла
-static void updateHeight(Node *node) {
+static void updateHeight(Node* node) {
     int leftHeight = getHeight(node->left);
     int rightHeight = getHeight(node->right);
     node->height = (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
 }
 
-// создание нового узла 
-static Node* createNode(const char *code, const char *name) {
-    Node *node = malloc(sizeof(Node));
+// создание нового узла
+static Node* createNode(const char* code, const char* name) {
+    Node* node = malloc(sizeof(Node));
     node->code = malloc(strlen(code) + 1);
     node->name = malloc(strlen(name) + 1);
     strcpy(node->code, code);
@@ -33,9 +33,9 @@ static Node* createNode(const char *code, const char *name) {
 }
 
 // правый поворот
-static Node* rotateRight(Node *y) {
-    Node *x = y->left;
-    Node *t2 = x->right;
+static Node* rotateRight(Node* y) {
+    Node* x = y->left;
+    Node* t2 = x->right;
 
     x->right = y;
     y->left = t2;
@@ -46,9 +46,9 @@ static Node* rotateRight(Node *y) {
 }
 
 // левый поворот
-static Node* rotateLeft(Node *x) {
-    Node *y = x->right;
-    Node *t2 = y->left;
+static Node* rotateLeft(Node* x) {
+    Node* y = x->right;
+    Node* t2 = y->left;
 
     y->left = x;
     x->right = t2;
@@ -59,7 +59,7 @@ static Node* rotateLeft(Node *x) {
 }
 
 // балансируем узел
-static Node* balanceNode(Node *node) {
+static Node* balanceNode(Node* node) {
     if (node == NULL)
         return NULL;
     updateHeight(node);
@@ -82,7 +82,7 @@ static Node* balanceNode(Node *node) {
 }
 
 // рекурсивная вставка узла
-Node* avlInsert(Node *root, const char *code, const char *name) {
+Node* avlInsert(Node* root, const char* code, const char* name) {
     if (root == NULL)
         return createNode(code, name);
 
@@ -101,16 +101,16 @@ Node* avlInsert(Node *root, const char *code, const char *name) {
 }
 
 // поиск минимального узла в поддереве, для удаления
-static Node* findMinNode(Node *node) {
-    Node *current = node;
+static Node* findMinNode(Node* node) {
+    Node* current = node;
     while (current && current->left)
         current = current->left;
     return current;
 }
 
 // удаление узла
-Node* avlDelete(Node *root, const char *code) {
-    if (root == NULL) 
+Node* avlDelete(Node* root, const char* code) {
+    if (root == NULL)
         return NULL;
 
     int cmp = strcmp(code, root->code);
@@ -122,12 +122,12 @@ Node* avlDelete(Node *root, const char *code) {
         // нашли удаляемый узел
         if (!root->left || !root->right) {
             // один потомок или ни одного
-            Node *temp = root->left ? root->left : root->right;
+            Node* temp = root->left ? root->left : root->right;
             if (temp) {
                 // копируем данные из потомка в текущий узел
                 free(root->code);
                 free(root->name);
-                *root = *temp;   // копируем структуру 
+                *root = *temp; // копируем структуру
                 free(temp);
             } else {
                 // нет потомков
@@ -138,7 +138,7 @@ Node* avlDelete(Node *root, const char *code) {
             }
         } else {
             // узел с двумя потомками: находим минимальный в правом поддереве
-            Node *temp = findMinNode(root->right);
+            Node* temp = findMinNode(root->right);
             // копируем данные из temp в root
             free(root->code);
             free(root->name);
@@ -154,8 +154,8 @@ Node* avlDelete(Node *root, const char *code) {
 }
 
 // поиск узла по ключу
-Node* avlFind(Node *root, const char *code) {
-    if (root == NULL) 
+Node* avlFind(Node* root, const char* code) {
+    if (root == NULL)
         return NULL;
     int cmp = strcmp(code, root->code);
     if (cmp < 0)
@@ -167,7 +167,7 @@ Node* avlFind(Node *root, const char *code) {
 }
 
 // освобождение памяти дерева
-void avlFree(Node *root) {
+void avlFree(Node* root) {
     if (root == NULL)
         return;
     avlFree(root->left);
@@ -178,7 +178,7 @@ void avlFree(Node *root) {
 }
 
 // сохраняем все записи в файл
-void avlSave(Node *root, FILE *out) {
+void avlSave(Node* root, FILE* out) {
     if (root == NULL)
         return;
     avlSave(root->left, out);
@@ -187,7 +187,7 @@ void avlSave(Node *root, FILE *out) {
 }
 
 // подсчет количества узлов
-int avlCount(Node *root) {
+int avlCount(Node* root) {
     if (root == NULL)
         return 0;
     return 1 + avlCount(root->left) + avlCount(root->right);
