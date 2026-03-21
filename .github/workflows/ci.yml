@@ -25,7 +25,9 @@ jobs:
 
       - name: Run clang-tidy
         run: |
-          find . -name '*.c' | xargs clang-tidy-14
+          for file in $(find . -name '*.c'); do
+            clang-tidy-14 "$file"
+          done
 
   build-and-test:
     runs-on: ubuntu-latest
