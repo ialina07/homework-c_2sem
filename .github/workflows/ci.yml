@@ -25,9 +25,18 @@ jobs:
 
       - name: Run clang-tidy
         run: |
-          find csv-printer -name '*.c' | xargs clang-tidy-14 \
-            --extra-arg=-I$(pwd)/csv-printer/include \
-            --extra-arg=-I$(pwd)/csv-printer/src
+          find . -name '*.c' | while read file; do
+            dir=$(dirname "$file")
+            parent=$(dirname "$dir")
+            
+            if [ -d "$parent/include" ]; then
+              clang-tidy-14 "$file" -- -I"$parent/include" -I"$dir" || true
+            elif [ -d "$dir/include" ]; then
+              clang-tidy-14 "$file" -- -I"$dir/include" -I"$dir" || true
+            else
+              clang-tidy-14 "$file" -- -I"$dir" || true
+            fi
+          done
 
   build-and-test:
     runs-on: ubuntu-latest
@@ -39,9 +48,22 @@ jobs:
 
       - name: Build and test
         run: |
-          cd csv-printer
-          mkdir -p build
-          cd build
-          cmake ..
-          make
-          ./tests
+          for dir in */; do
+            if [ -f "$dir/CMakeLists.txt" ]; then
+              echo "========================================="
+              echo "Building: $dir"
+              echo "========================================="
+              cd "$dir"
+              mkdir -p build
+              cd build
+              cmake ..
+              make
+              
+              # Run tests if they exist
+              if [ -f "./tests" ]; then
+                ./tests
+              fi
+              
+              cd ../..
+            fi
+          done
