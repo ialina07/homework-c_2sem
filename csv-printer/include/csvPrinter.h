@@ -3,9 +3,9 @@
 
 typedef struct {
     char*** data;
-    int rows; // количество строк
-    int cols; // количество столбцов
-    int* isNumber; // флаги: 1 если колонка числовая
+    int rows;       // количество строк
+    int cols;       // количество столбцов
+    int* isNumber;  // флаги: 1 если колонка числовая
     int* colWidths; // ширина каждого столбца
 } CSVTable;
 

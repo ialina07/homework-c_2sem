@@ -4,8 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void testIsNumber()
-{
+void testIsNumber() {
     assert(isNumber("123") == 1);
     assert(isNumber("-45.67") == 1);
     assert(isNumber("0") == 1);
@@ -15,8 +14,7 @@ void testIsNumber()
     printf("testIsNumber пройден\n");
 }
 
-int main()
-{
+int main() {
     testIsNumber();
     printf("Все тесты пройдены\n");
     return 0;

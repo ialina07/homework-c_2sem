@@ -8,8 +8,7 @@
 #define MAX_ROWS 1000
 
 // Проверяем, является ли строка числом
-int isNumber(const char* str)
-{
+int isNumber(const char* str) {
     if (str == NULL || *str == '\0')
         return 0;
     char* endptr;
@@ -19,8 +18,7 @@ int isNumber(const char* str)
 }
 
 // Чтение CSV-файла и заполнение таблицы
-CSVTable* readCsv(const char* filename)
-{
+CSVTable* readCsv(const char* filename) {
     FILE* f = fopen(filename, "r");
     if (!f) {
         fprintf(stderr, "Cannot open input file %s\n", filename);

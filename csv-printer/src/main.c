@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     if (argc != 3) {
         fprintf(stderr, "использование: %s <input.csv> <output.txt>\n", argv[0]);
         return 1;
